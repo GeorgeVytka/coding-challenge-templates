@@ -1,0 +1,28 @@
+.group{
+    
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+    height: 70px;
+    margin-left: 50px;
+    margin-top: 50px;
+   
+   
+}
+
+.labelContainer{
+   text-align: left;
+   margin-bottom: 5px;
+color: rgb(75, 134, 134);
+}
+
+input {
+    line-height: 20px;
+}
+
+.formInput{
+    outline: none;
+   
+    line-height: 20px;
+    height: 300px
+}

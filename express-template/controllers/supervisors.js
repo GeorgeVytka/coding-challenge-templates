@@ -63,6 +63,7 @@ export const createSupervisor = async (req, res) => {
       return;
     }
     console.log(req.body);
+    res.status(200).json({ message: "registeration successful", result });
     res.json({ supervisors: req.body });
   } catch (e) {
     res.json({
