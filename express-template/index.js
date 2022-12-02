@@ -1,25 +1,22 @@
-const express = require('express')
+import express from "express";
+import cors from "cors";
+import bodyParser from "body-parser";
 
-const app = new express()
-app.use(express.json())
+import dotenv from "dotenv";
+import supervisors from "./routes/supervisors.js";
 
-app.get('/hello', async (req, res) => {
-    res.json({'hello': 'world'})
-})
+const app = new express();
+const router = express.Router();
+app.use(express.json());
+app.use(cors());
 
-app.post('/echo', async (req, res) => {
-    try {
-        res.json({
-            'body': req.body
-        })
-    }
-    catch(e) {
-        res.json({
-            'error': e.message
-        })
-    }
-})
+app.use(bodyParser.json({ limit: "30mb", extended: true }));
+app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
+dotenv.config();
 
-app.listen(8080, () => {
-    console.log('Listening on 8080. Ctrl+c to stop this server.')
-})
+// ROUTES
+app.use("/api", supervisors);
+
+app.listen("8083", () => {
+  console.log(`Listening on 8083:`);
+});
