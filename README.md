@@ -1,3 +1,7 @@
+# Install
+use npm init to initializes the repo then npm install to install all the necessary packages.
+
+
 # Important please read
  You are required to dockerize your application for us to run your submission. The following templates are available for you to use for your submission. Feel free to use these templates or you may submit your challenge with your own dockerized services (more brownie points!).
 
