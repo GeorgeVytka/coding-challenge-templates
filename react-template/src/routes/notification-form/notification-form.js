@@ -9,12 +9,13 @@ const defaultFormFields = {
   lastName: "",
   email: "",
   phoneNumber: "",
-  Supervisor: "",
+  supervisor: "",
 };
 
 const NotificationForm = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const [supervisorList, setSupervisorList] = useState({});
+  const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -23,13 +24,14 @@ const NotificationForm = () => {
         const { data: response } = await axios.get(
           "http://localhost:8083/api/supervisors"
         );
-
+        console.log("()()()()", response);
         // setSupervisorList(response);
         // setIsLoading(false);
         setSupervisorList(response.supervisors);
         //console.log("---", supervisorList.data.supervisors);
-      } catch (error) {
-        console.log(error);
+      } catch (e) {
+        console.log(e);
+        setError(e);
       }
       setLoading(false);
 
@@ -48,23 +50,16 @@ const NotificationForm = () => {
 
     setFormFields({ ...formFields, [name]: value });
   };
-  console.log(formFields);
+
   const handleSubmit = async (event) => {
     const tempUrl = "http://localhost:8083";
     event.preventDefault();
     console.log(formFields.supervisors);
 
     try {
-      const response = axios.put(`${tempUrl}/api/submit`, {
-        firstName: "tom",
-        lastName: "sllllm",
-        email: "email@gmail.com",
-        phoneNumber: "2345678790",
-        Supervisor: "Anastacio",
-      });
-      console.log("in front end", response);
+      const response = axios.put(`${tempUrl}/api/submit`, formFields);
     } catch (error) {
-      alert(error);
+      console.log("error");
     }
   };
   return (
@@ -97,7 +92,7 @@ const NotificationForm = () => {
         <div className={styles.innerFormContainer}>
           <div className={styles.FormContainer}>
             <Checkbox
-              label="email"
+              label="Email"
               type="checkbox"
               id="topping"
               name="topping"
@@ -114,7 +109,7 @@ const NotificationForm = () => {
 
           <div className={styles.FormContainer}>
             <Checkbox
-              label="email"
+              label="Phone Number"
               type="checkbox"
               id="topping"
               name="topping"
@@ -140,17 +135,12 @@ const NotificationForm = () => {
         {loading && <div>Loading</div>}
         {!loading && (
           <div className={styles.dropDownContainer}>
-            {console.log("====", supervisorList)}
             <select
               onChange={handleChange}
               name="supervisor"
               id="supervisor"
               style={{ width: "300px", height: "40px" }}
             >
-              {/* <option value="rigatoni">Rigatoni</option>
-            <option value="dave">Dave</option>
-            <option value="pumpernickel">Pumpernickel</option>
-            <option value="reeses">Reeses</option>  */}
               {Object.values(supervisorList).map((supervisor, index) => (
                 <option key={index} value={supervisor.firstName}>
                   {supervisor.firstName}

@@ -40,20 +40,21 @@ export const getSupervisor = async (req, res) => {
 export const createSupervisor = async (req, res) => {
   let hasNumber = /\d/;
   let phoneno = /^\+?([0-9]{2})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/;
+
   try {
     if (
       req.body.firstName === "" ||
       req.body.lastName === "" ||
-      req.body.Supervisor === ""
+      req.body.supervisor === ""
     ) {
       console.log("error: missing fields");
-      res.json({ message: "missing fields" });
+      res.status(400).json({ message: "missing fields" });
       return;
     }
 
     if (hasNumber.test(req.body.firstName)) {
       console.log("error: Number in firstname");
-      res.json({ message: "Number in firstname" });
+      res.status(400).json({ message: "Number in firstname" });
       return;
     }
 
